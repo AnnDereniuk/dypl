@@ -64,11 +64,11 @@ plt.plot(grid_x, grid_y,grid_z, 'ro')
 plt.plot(x, y, z, 'ro')
 
 ax.quiver(x[0], y[0], z[0], dr_x, dr_y, dr_z, length =1,arrow_length_ratio =0.1)
-ax.quiver(x[0], y[0], z[0], r_x, r_y, r_z, length =1, arrow_length_ratio =0.1)
+ax.quiver(x[0], y[0], z[0], r_x, r_y, r_z, length =1, arrow_length_ratio =0.1,linestyle = '--', color = "black")
 
 ax.quiver(grid_x[0], grid_y[0],grid_z[0],
 velocity_x-grid_x[0],velocity_y-grid_y[0],velocity_z-grid_z[0],
-length = 0.5, arrow_length_ratio =0.1, color = "red")
+length = 0.2, arrow_length_ratio =0.1, color = "red")
 
 plt.title('Task 4')
 plt.xlabel('x', color = "blue")

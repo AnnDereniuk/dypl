@@ -7,7 +7,7 @@ from some_functions import get_velocity_coefs_with_GAMMA, get_vector_coords, vec
 m=4
 
 #number of grid dots
-k=1
+k=2
 
 #dots
 x = np.empty(m)
@@ -35,9 +35,9 @@ dr_z[m-1]=get_vector_coords(z[m-1],z[0])
 grid_x =np.empty(k)
 grid_y =np.empty(k)
 grid_z =np.empty(k)
-grid_x = [7]
-grid_y = [2]
-grid_z = [1]
+grid_x = [7, 5]
+grid_y = [2, 3]
+grid_z = [1, 1]
 
 #----------------------------------
 r_x = np.empty(k)
@@ -83,11 +83,11 @@ plt.plot(grid_x, grid_y,grid_z, 'ro')
 plt.plot(x, y, z, 'ro')
 
 ax.quiver(x, y, z, dr_x, dr_y, dr_z, length =1,arrow_length_ratio =0.1)
-ax.quiver(x[0], y[0], z[0], r_x, r_y, r_z, length =1, arrow_length_ratio =0.1)
-ax.quiver(grid_x[0], grid_y[0],grid_z[0],
-
-velocity_x-grid_x[0],velocity_y-grid_y[0],velocity_z-grid_z[0],
-length = 0.5, arrow_length_ratio =0.1, color = "red")
+ax.quiver(x[0], y[0], z[0], r_x[0], r_y[0], r_z[0], length =1, arrow_length_ratio =0.1,linestyle = '--', color = "black")
+ax.quiver(x[1], y[1], z[1], r_x[1], r_y[1], r_z[1], length =1, arrow_length_ratio =0.1,linestyle = '--', color = "black")
+ax.quiver(grid_x, grid_y,grid_z,
+            velocity_x-grid_x,velocity_y-grid_y,velocity_z-grid_z,
+            length = 0.5, arrow_length_ratio =0.1, color = "red")
 
 #configs
 
