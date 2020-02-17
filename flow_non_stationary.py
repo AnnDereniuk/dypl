@@ -29,6 +29,10 @@ y1 = np.linspace(y_left,y_center,m)
 x2 = np.linspace(x_center,x_right,m)
 y2 = np.flip(y1)
 
+# if (x1[m-1]==x2[0]):
+#    x1 = np.delete(x1,x1[m-1])
+#    y1 = np.delete(y1,y1[m-1])
+
 #array of discrete points
 x = np.append(x1,x2) 
 y = np.append(y1,y2)
@@ -36,7 +40,7 @@ y = np.append(y1,y2)
 #finding colocation marks:
 colocation_x=np.empty(2*m-1)
 colocation_y=np.empty(2*m-1)
-for i in range(0,2*m-1):
+for i in range(0,2*m-2):
     colocation_x[i] = (x[i] + x[i+1])/2
     colocation_y[i] = (y[i] + y[i+1])/2
 
