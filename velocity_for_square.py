@@ -64,12 +64,10 @@ for i in range(len(r_x)):
     
     #finding length of AV:
     r_squared[i] = vector_s_squared_length(r_x[i], r_y[i], r_z[i])
-    
     #finding components du, dv, dw
     du[i] = (dr_y[0]*r_z[i] - dr_z[0]*r_y[i])/r_squared[i]
     dv[i] = (dr_z[0]*r_x[i] - dr_x[0]*r_z[i])/r_squared[i]
     dw[i] = (dr_x[0]*r_y[i] - dr_y[0]*r_x[i])/r_squared[i]
-    
     #final velocity values
     velocity_x[i] = get_velocity_coefs_with_GAMMA(du[i])
     velocity_y[i] = get_velocity_coefs_with_GAMMA(dv[i])
