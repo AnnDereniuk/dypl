@@ -9,8 +9,8 @@ fig = plt.figure(figsize=(6,6))
 ax = plt.axes()
 
 #grid
-grid_vertical = np.linspace(0,5,30)
-grid_horizontal = np.linspace(0,5,30)
+grid_vertical = np.linspace(0,6,40)
+grid_horizontal = np.linspace(0,6,40)
 grid_x,grid_y =np.meshgrid(grid_vertical, grid_horizontal)
 
 m = 10   #half-number of vortex dots
@@ -51,7 +51,7 @@ plt.plot(x, y, 'ro', markersize=2)
 plt.plot(x, y, 'gray')
 plt.plot(colocation_x, colocation_y, 'bo', markersize=2)
 
-# plt.plot(grid_x,grid_y, 'ko', markersize=1)
+plt.plot(grid_x,grid_y, 'ko', markersize=1)
 
 plt.title('blabla')
 plt.xlabel('x')

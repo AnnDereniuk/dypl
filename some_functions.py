@@ -3,6 +3,8 @@ from tkinter import *
 GAMMA=1.
 
 #2D:
+h = 1   #heidth of the figure 
+w = 1   #half-width of the figure
 
 #chosing a 2D point
 def choosePoint():
@@ -30,18 +32,14 @@ def choosePoint():
     root.mainloop()
 
 def chooseLeftPointX(x):
-    w = 1   #half-width of the figure
     return x - w
 def chooseLeftPointY(x):
-    h = 3   #heidth of the figure 
     return x - h
 
 def chooseRightPointX(x):
-    w = 1   #half-width of the figure
     return x + w
 
 def chooseRightPointY(x):
-    h = 3   #heidth of the figure 
     return x - h
 
 def get_step(x1,x2,m):
