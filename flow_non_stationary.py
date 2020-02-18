@@ -25,8 +25,8 @@ y_left = chooseLeftPointY(y_center)
 x_right = chooseRightPointX(x_center)
 
 #building figure
-x1 = np.linspace(x_left,x_center,m)
-y1 = np.linspace(y_left,y_center,m)
+x1 = np.linspace(x_left,x_center,m, endpoint=FALSE)
+y1 = np.linspace(y_left,y_center,m, endpoint=FALSE)
 x2 = np.linspace(x_center,x_right,m)
 y2 = np.flip(y1)
 
@@ -37,6 +37,9 @@ y2 = np.flip(y1)
 #array of discrete points
 x = np.append(x1,x2) 
 y = np.append(y1,y2)
+print("х,у вихорів:")
+print(x)
+print(y)
 
 #finding colocation marks:
 colocation_x=np.empty(2*m-1)
@@ -60,6 +63,7 @@ print(normal_y)
 left_matrix_part_x = left_matrix_part_y = left_matrix= np.empty(shape=(2*m,2*m))
 right_matrix_part_x = right_matrix_part_y = right_matrix = np.empty(2*m)
 
+
 for j in range(0, 2*m-2):
     for i in range (0, 2*m-2):
             left_matrix_part_x[j][i]=get_velocity_j(x[j], colocation_x[i],get_R(get_vector_coords(x[j], colocation_x[i]),get_vector_coords(y[j], colocation_y[i])))*normal_x[i]
@@ -75,12 +79,6 @@ print(left_matrix)
 print("Права частина СЛАР:")
 print(right_matrix)
 
-gamma_arr = np.empty(2*m)
-gamma_arr=np.linalg.solve(left_matrix, right_matrix)
-
-print("Гамма:")
-print(gamma_arr)
-
 plt.plot(x, y, 'ro', markersize=2)
 plt.plot(x, y, 'gray')
 plt.plot(colocation_x, colocation_y, 'bo', markersize=2)
@@ -93,3 +91,10 @@ plt.title('blabla')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.show()
+
+gamma_arr = np.empty(2*m)
+gamma_arr=np.linalg.solve(left_matrix, right_matrix)
+
+print("Гамма:")
+print(gamma_arr)
+
