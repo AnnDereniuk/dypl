@@ -45,15 +45,23 @@ def chooseRightPointY(x):
 def get_step(x1,x2,m):
     return (x2-x1)/m
 
+def get_R(x_coord, y_coord):
+    return (x_coord**2+y_coord**2)
 
+def get_vector_length_2d(x_coord, y_coord):
+    return (x_coord**2+y_coord**2)**(1/2)
 
 #get G/4pi version
 def get_velocity_coefs_with_GAMMA(x):
-    return (GAMMA/4*3.14)*x
+    return (GAMMA/4.*3.14)*x
 
 #get vector coords
 def get_vector_coords(start, end):
     return  end-start
+
+#get velocity for j index
+def get_velocity_j(x, x_j, R):          #R=(x-x_j)^2 +(y-Y_j)^2
+    return (1./(2.*3.14))*((x_j - x)/R)
 
 #get vector length
 def vector_length(x_coord, y_coord, z_coord):
