@@ -84,7 +84,6 @@ plt.plot(x, y, 'gray')
 plt.plot(colocation_x, colocation_y, 'bo', markersize=2)
 ax.quiver(colocation_x, colocation_y, normal_x, normal_y)
 
-
 plt.plot(grid_x,grid_y, 'ko', markersize=1)
 
 plt.title('blabla')
