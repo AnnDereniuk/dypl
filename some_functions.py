@@ -3,8 +3,8 @@ from tkinter import *
 GAMMA=1.
 
 #2D:
-h = 1   #heidth of the figure 
-w = 1   #half-width of the figure
+h = 20.   #heidth of the figure 
+w = 10.   #half-width of the figure
 
 #chosing a 2D point
 def choosePoint():
@@ -45,8 +45,14 @@ def chooseRightPointY(x):
 def get_step(x1,x2,m):
     return (x2-x1)/m
 
-def get_R(x_coord, y_coord):
-    return (x_coord**2+y_coord**2)
+def get_R(x_coord, y_coord, x_vortex_first, x_vortex_second, y_vortex_first, y_vortex_second):
+    delta = 0.5*(get_vector_length_2d(get_vector_coords(x_vortex_second, x_vortex_first), get_vector_coords(y_vortex_second, y_vortex_first)))
+    r = get_vector_length_2d(get_vector_coords(x_coord, x_vortex_first), get_vector_coords(y_coord,y_vortex_first))
+    if r>delta:
+        return r
+    else:
+        return delta
+
 
 def get_vector_length_2d(x_coord, y_coord):
     return np.sqrt(x_coord**2+y_coord**2)
@@ -61,7 +67,7 @@ def get_vector_coords(start, end):
 
 #get velocity for j index
 def get_velocity_j(x, x_j, R):          #R=(x-x_j)^2 +(y-Y_j)^2
-    return (1./(2.*np.pi))*((x_j - x)/R)
+    return (1./(2.*np.pi))*((x_j - x)/(pow(R,2)))
 
 #get vector length
 def vector_length(x_coord, y_coord, z_coord):
