@@ -2,8 +2,8 @@ from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
 import numpy as np
 from some_functions import *
-GAMMA_ZERO = 0.
-VELOCITY_ON_INF = 5.
+GAMMA_ZERO = 1.
+VELOCITY_ON_INF = 10.
 #main task trial
 #pre configs
 np.set_printoptions(precision=13)
@@ -60,8 +60,8 @@ print(colocation_y)
 normal_x=np.empty(k)
 normal_y=np.empty(k)
 for i in range(normal_x.size):
-    normal_y[i]=(x[i+1]-x[i])/get_vector_length_2d(get_vector_coords(x[i],x[i+1]), get_vector_coords(y[i],y[i+1]))
-    normal_x[i]=-(y[i+1]-y[i])/get_vector_length_2d(get_vector_coords(x[i],x[i+1]), get_vector_coords(y[i],y[i+1]))
+    normal_y[i]=-(x[i+1]-x[i])/get_vector_length_2d(get_vector_coords(x[i],x[i+1]), get_vector_coords(y[i],y[i+1]))
+    normal_x[i]=(y[i+1]-y[i])/get_vector_length_2d(get_vector_coords(x[i],x[i+1]), get_vector_coords(y[i],y[i+1]))
 print("х, у нормалей:")
 print(normal_x)
 print(normal_y)
@@ -132,7 +132,7 @@ for i in range(0,dots_quantity):
 plt.plot(y, x, 'ro', markersize=2)                                      #vortices
 plt.plot(y, x, 'gray')
 plt.plot(colocation_y, colocation_x, 'bo', markersize=2)                #colocation dots
-# ax.quiver(colocation_x, colocation_y, normal_x, normal_y)               #normals
+ax.quiver(colocation_y, colocation_x, normal_y,normal_x)               #normals
 plt.plot(grid_x,grid_y, 'ko', markersize=1)                             #grid dots
 ax.quiver(grid_x,grid_y, velocity_x,velocity_y)          #velocity
 plt.title('plot')
