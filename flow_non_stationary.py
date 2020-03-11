@@ -2,7 +2,7 @@ from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
 import numpy as np
 from some_functions import *
-GAMMA_ZERO = 1.
+GAMMA_ZERO = 0.
 VELOCITY_ON_INF = 10.
 #main task trial
 #pre configs
@@ -34,12 +34,12 @@ x_right = chooseRightPointX(x_center)
 #building figure
 x1 = np.linspace(x_left,x_center,m-1, endpoint=FALSE)
 y1 = np.linspace(y_left,y_center,m, endpoint=FALSE)
-x2 = np.linspace(x_center,x_right,m+1)    #todo
+x2 = np.linspace(x_center,x_right,m+1)
 y2 = np.linspace(y_center,y_left,m)
 
 #array of discrete points
-y = np.append(x1,x2) 
-x = np.append(y1,y2)
+x = np.append(x1,x2) 
+y = np.append(y1,y2)
 
 print("х,у вихорів:")
 print(x)
@@ -60,21 +60,21 @@ print(colocation_y)
 normal_x=np.empty(k)
 normal_y=np.empty(k)
 for i in range(normal_x.size):
-    normal_y[i]=-(x[i+1]-x[i])/get_vector_length_2d(get_vector_coords(x[i],x[i+1]), get_vector_coords(y[i],y[i+1]))
-    normal_x[i]=(y[i+1]-y[i])/get_vector_length_2d(get_vector_coords(x[i],x[i+1]), get_vector_coords(y[i],y[i+1]))
+    normal_y[i]=(x[i+1]-x[i])/get_vector_length_2d(get_vector_coords(x[i],x[i+1]), get_vector_coords(y[i],y[i+1]))
+    normal_x[i]=-(y[i+1]-y[i])/get_vector_length_2d(get_vector_coords(x[i],x[i+1]), get_vector_coords(y[i],y[i+1]))
 print("х, у нормалей:")
 print(normal_x)
 print(normal_y)
 
-left_matrix_part_x = left_matrix_part_y = left_matrix= np.empty(shape=(2*m-1,2*m-1))
-right_matrix_part_x = right_matrix_part_y = right_matrix = np.empty(2*m-1)
+left_matrix_part_x = left_matrix_part_y = left_matrix= np.empty(shape=(2*m,2*m))
+right_matrix_part_x = right_matrix_part_y = right_matrix = np.empty(2*m)
 
 
 for j in range(right_matrix.size-1):
     for i in range(right_matrix.size):
-        left_matrix_part_x[j][i] = get_velocity_j(x[i], colocation_x[j], get_R(colocation_x[j], colocation_y[j],x[i], x[i+1], y[i],y[i+1]))*normal_y[j]
+        left_matrix_part_x[j][i] = get_velocity_j(x[i], colocation_x[j], get_R(colocation_x[j], colocation_y[j], x[i], x[i+1], y[i], y[i+1]))*normal_y[j]
 
-        left_matrix_part_y[j][i] = get_velocity_j(colocation_y[j], y[i], get_R(colocation_x[j], colocation_y[j],x[i], x[i+1], y[i],y[i+1]))*normal_x[j]
+        left_matrix_part_y[j][i] = get_velocity_j(colocation_y[j], y[i], get_R(colocation_x[j], colocation_y[j], x[i], x[i+1], y[i], y[i+1]))*normal_x[j]
 
         left_matrix[j][i] = left_matrix_part_x[j][i] + left_matrix_part_y[j][i]
 
@@ -82,8 +82,8 @@ for j in range(right_matrix.size-1):
         right_matrix_part_y[j] = -VELOCITY_ON_INF*normal_x[j]
             
         right_matrix[j] = right_matrix_part_x[j] + right_matrix_part_y[j]
-        left_matrix[k-1][i] = 1.
-right_matrix[k-1] = GAMMA_ZERO
+        left_matrix[k][i] = 1.
+right_matrix[k] = GAMMA_ZERO
 print("Ліва частина СЛАР:")
 print(left_matrix)
 print("Права частина СЛАР:")
@@ -95,30 +95,14 @@ gamma_arr = np.linalg.solve(left_matrix, right_matrix)
 print("Гамма:")
 print(gamma_arr)
 
-# velocity_x=np.empty(dots_quantity)
-# velocity_y=np.empty(dots_quantity)
-# for i in range(0,dots_quantity):
-#     for j in range(0,dots_quantity):
-#         for v in range(0,k):
-#             velocity_x[i]+=gamma_arr[v]*get_velocity_j(x[v], grid_x[i][j], get_R(grid_x[i][j], grid_y[i][j], x[v], x[v+1], y[v], y[v+1]))
-#             velocity_y[i]+=gamma_arr[v]*get_velocity_j(grid_y[i][j], y[v], get_R(grid_y[i][j], grid_y[i][j],x[v], x[v+1], y[v], y[v+1]))
-#             velocity_x[i]+=VELOCITY_ON_INF
-#             velocity_y[i]+=VELOCITY_ON_INF 
-
-
 velocity_x=np.array([])
 velocity_y=np.array([])
 grid_x=np.asarray(grid_x).reshape(-1)
 grid_y=np.asarray(grid_y).reshape(-1)
 # print(grid_x)
 
-# for i in range(0,dots_quantity**2):
-#     for v in range(0,k):
-#         velocity_x[i]+=gamma_arr[v]*get_velocity_j(x[v], grid_x[i], get_R(grid_x[i], grid_y[i], x[v], x[v+1], y[v], y[v+1]))
-#         velocity_y[i]+=gamma_arr[v]*get_velocity_j(grid_y[i], y[v], get_R(grid_y[i], grid_y[i],x[v], x[v+1], y[v], y[v+1]))
-#     velocity_x[i]+=VELOCITY_ON_INF
-#     velocity_y[i]+=VELOCITY_ON_INF 
 
+#TODO R: change way of getting R
 for i in range(0,dots_quantity):
     for j in range(0,dots_quantity):
         res_x=VELOCITY_ON_INF
