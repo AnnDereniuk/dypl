@@ -3,8 +3,8 @@ from tkinter import *
 GAMMA=1.
 
 #2D:
-h = 20.   #heidth of the figure 
-w = 10.   #half-width of the figure
+h = 1.   #heidth of the figure 
+w = 1.   #half-width of the figure
 
 #chosing a 2D point
 def choosePoint():
