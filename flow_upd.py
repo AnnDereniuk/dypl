@@ -114,7 +114,7 @@ discrete_points = split_curve(x_list, y_list, (0.5, - 0.25), num)
 plt.axis("equal")
 plt.xticks(np.arange(-1, 1.1, 0.5))
 plt.yticks(np.arange(-1, 1.1, 0.5))
-plt.plot(discrete_points[:, 0], discrete_points[:, 1], 'yo')
+plt.plot(discrete_points[:, 0], discrete_points[:, 1], 'ro',markersize=2)
 
 collocation_points = list()
 collocation_points = (discrete_points[:-1] + discrete_points[1:]) / 2
@@ -122,8 +122,8 @@ collocation_points = (discrete_points[:-1] + discrete_points[1:]) / 2
 plt.axis("equal")
 plt.xticks(np.arange(-1, 1.1, 0.5))
 plt.yticks(np.arange(-1, 1.1, 0.5))
-plt.plot(discrete_points[:, 0], discrete_points[:, 1], 'yo')
-plt.plot(collocation_points[:, 0], collocation_points[:, 1], 'gs')
+plt.plot(discrete_points[:, 0], discrete_points[:, 1], 'ro',markersize=2)
+plt.plot(collocation_points[:, 0], collocation_points[:, 1], 'bo', markersize=2)
 
 tau = discrete_points[1:] - discrete_points[:-1]
 tau /= np.linalg.norm(tau, axis=1, keepdims=True)
@@ -135,16 +135,17 @@ normals[:, 1] = tau[:, 0]
 plt.axis("equal")
 plt.xticks(np.arange(-1.5, 2.1, 0.5))
 plt.yticks(np.arange(-2, 2.1, 0.5))
-plt.plot(discrete_points[:, 0], discrete_points[:, 1], 'yo')
-plt.plot(collocation_points[:, 0], collocation_points[:, 1], 'gs')
+plt.plot(discrete_points[:, 0], discrete_points[:, 1], 'ro', markersize=2)
+plt.plot(collocation_points[:, 0], collocation_points[:, 1], 'bo', markersize=2)
 _norm_vecs = np.empty(shape=(2 * normals.shape[0], 2), dtype=normals.dtype)
 _paired_ind = (np.arange(0, _norm_vecs.shape[0]) % 2 == 0)
 _norm_vecs[_paired_ind] = collocation_points
 _norm_vecs[np.bitwise_not(_paired_ind)] = collocation_points + normals
 for i in range(0, len(_norm_vecs), 2):
-    plt.plot([_norm_vecs[i][0], _norm_vecs[i + 1][0]], [_norm_vecs[i][1],_norm_vecs[i + 1][1]], 'g')
-    plt.plot([_norm_vecs[i + 1][0]], [_norm_vecs[i + 1][1]], 'g')
-
+    # plt.plot([_norm_vecs[i][0], _norm_vecs[i + 1][0]], [_norm_vecs[i][1],_norm_vecs[i + 1][1]], 'g')
+    # plt.plot([_norm_vecs[i + 1][0]], [_norm_vecs[i + 1][1]], 'g')
+    ax = plt.axes()
+    ax.quiver(collocation_points[:, 0], collocation_points[:, 1],normals[:, 0], normals[:, 1])
 delta = np.min(np.linalg.norm(discrete_points[1:] - discrete_points[:-1], axis=1)) / 2
 
 def calc_R(point, discrete_points, delta):
@@ -352,19 +353,22 @@ for plot_num, (title_s, phi_map) in enumerate(phi_maps.items()):
         ax.set_xlabel([X_1, X_2])
         ax.set_ylabel([Y_1, Y_2])
 
-        ax.plot(discrete_points[:, 0], discrete_points[:, 1], 'yo')
-        ax.plot(collocation_points[:, 0], collocation_points[:, 1], 'gs')
+        ax.plot(discrete_points[:, 0], discrete_points[:, 1], 'ro', markersize=2)
+        ax.plot(collocation_points[:, 0], collocation_points[:, 1], 'bo', markersize=2)
 
-        im = ax.imshow(phi_map[i, ::-1, :], cmap=cm.viridis, extent=[X_1, X_2, Y_1, Y_2])  # drawing the function
+        im = ax.imshow(phi_map[i, ::-1, :], cmap=cm.coolwarm, extent=[X_1, X_2, Y_1, Y_2])  # drawing the function
 
         # adding the Contour lines with labels
-        cset = plt.contour(phi_map[i], np.linspace(lo, hi, 20), linewidths=1, cmap=cm.Set3, extent=[X_1, X_2, Y_1, Y_2])
-        plt.clabel(cset, inline=True, fmt='%1.1f', fontsize=10)
+        # cset = plt.contour(phi_map[i], np.linspace(lo, hi, 20), linewidths=1, cmap=cm.Set3, extent=[X_1, X_2, Y_1, Y_2])
+        # plt.clabel(cset, inline=True, fmt='%1.1f', fontsize=10)
         plt.colorbar(im)  # adding the colobar on the right
         # latex fashion title
         plt.title('{}, t = {:.4f}'.format(title_s, t))
 
 plt.show()
+
+
+
 
 
 
@@ -393,7 +397,7 @@ for i in range(T.shape[0]):
     
 phi_maps = {
     "PSI: OPTION 1": psi_simple_map,
-    #"PSI: OPTION 2 (DIPOL)": psi_map
+    "PSI: OPTION 2 (DIPOL)": psi_map
 }
 
 for plot_num, (title_s, phi_map) in enumerate(phi_maps.items()):
@@ -412,13 +416,13 @@ for plot_num, (title_s, phi_map) in enumerate(phi_maps.items()):
         ax.set_xlabel([X_1, X_2])
         ax.set_ylabel([Y_1, Y_2])
 
-        ax.plot(discrete_points[:, 0], discrete_points[:, 1], 'yo')
-        ax.plot(collocation_points[:, 0], collocation_points[:, 1], 'gs')
+        ax.plot(discrete_points[:, 0], discrete_points[:, 1], 'ro', markersize=2)
+        ax.plot(collocation_points[:, 0], collocation_points[:, 1], 'bo', markersize=2)
 
-        im = ax.imshow(phi_map[i, ::-1, :], cmap=cm.viridis, extent=[X_1, X_2, Y_1, Y_2])  # drawing the function
+        im = ax.imshow(phi_map[i, ::-1, :], cmap=cm.coolwarm, extent=[X_1, X_2, Y_1, Y_2])  # drawing the function
 
         # adding the Contour lines with labels
-        cset = plt.contour(phi_map[i], np.linspace(lo, hi, 20), linewidths=1, cmap=cm.Set3, extent=[X_1, X_2, Y_1, Y_2])
+        cset = plt.contour(phi_map[i], np.linspace(lo, hi, 20), linewidths=1, cmap=cm.plasma, extent=[X_1, X_2, Y_1, Y_2])
         plt.clabel(cset, inline=True, fmt='%1.1f', fontsize=10)
         plt.colorbar(im)  # adding the colobar on the right
         # latex fashion title
@@ -448,7 +452,7 @@ for i in range(T.shape[0]):
     p_map[i] = calc_p(Cp_map[i])
     
 phi_maps = {
-#     "C_p": Cp_map,
+    "C_p": Cp_map,
     "P:": p_map
 }
 
@@ -468,30 +472,30 @@ for plot_num, (title_s, phi_map) in enumerate(phi_maps.items()):
         ax.set_xlabel([X_1, X_2])
         ax.set_ylabel([Y_1, Y_2])
 
-        ax.plot(discrete_points[:, 0], discrete_points[:, 1], 'yo')
-        ax.plot(collocation_points[:, 0], collocation_points[:, 1], 'gs')
+        ax.plot(discrete_points[:, 0], discrete_points[:, 1], 'ro', markersize=2)
+        ax.plot(collocation_points[:, 0], collocation_points[:, 1], 'bo', markersize=2)
 
-        im = ax.imshow(phi_map[i, ::-1, :], cmap=cm.viridis, extent=[X_1, X_2, Y_1, Y_2])  # drawing the function
+        im = ax.imshow(phi_map[i, ::-1, :], cmap=cm.coolwarm, extent=[X_1, X_2, Y_1, Y_2])  # drawing the function
 
         # adding the Contour lines with labels
-        cset = plt.contour(phi_map[i], np.linspace(lo, hi, 20), linewidths=1, cmap=cm.Set3, extent=[X_1, X_2, Y_1, Y_2])
+        cset = plt.contour(phi_map[i], np.linspace(lo, hi, 20), linewidths=1, cmap=cm.plasma, extent=[X_1, X_2, Y_1, Y_2])
         plt.clabel(cset, inline=True, fmt='%1.1f', fontsize=10)
         plt.colorbar(im)  # adding the colobar on the right
         # latex fashion title
         plt.title('{}, t = {:.4f}'.format(title_s, t))
 
-fig = plt.figure(figsize=(10, 10))
+# fig = plt.figure(figsize=(10, 10))
 
-mm = 1-(np.linalg.norm(V_field, axis=-1) / np.linalg.norm(V_inf))**2
-print(mm.shape)
-lo = mm.min()
-hi = mm.max()
-im = plt.imshow(-mm[::-1, :], cmap=cm.viridis, extent=[X_1, X_2, Y_1, Y_2])  # drawing the function
+# mm = 1-(np.linalg.norm(V_field, axis=-1) / np.linalg.norm(V_inf))**2
+# print(mm.shape)
+# lo = mm.min()
+# hi = mm.max()
+# im = plt.imshow(-mm[::-1, :], cmap=cm.coolwarm, extent=[X_1, X_2, Y_1, Y_2])  # drawing the function
 
-# adding the Contour lines with labels
-cset = plt.contour(mm, np.linspace(lo, hi, 20), linewidths=1, cmap=cm.Set3, extent=[X_1, X_2, Y_1, Y_2])
-plt.clabel(cset, inline=True, fmt='%1.1f', fontsize=10)
-plt.colorbar(im)  # adding the colobar on the right
+# # adding the Contour lines with labels
+# cset = plt.contour(mm, np.linspace(lo, hi, 20), linewidths=1, cmap=cm.Set3, extent=[X_1, X_2, Y_1, Y_2])
+# plt.clabel(cset, inline=True, fmt='%1.1f', fontsize=10)
+# plt.colorbar(im)  # adding the colobar on the right
 plt.show()
 
 

@@ -116,7 +116,7 @@ for i in range(0,dots_quantity):
 plt.plot(y, x, 'ro', markersize=2)                                      #vortices
 plt.plot(y, x, 'gray')
 plt.plot(colocation_y, colocation_x, 'bo', markersize=2)                #colocation dots
-ax.quiver(colocation_y, colocation_x, normal_y,normal_x)               #normals
+ax.quiver(colocation_y, colocation_x, normal_y, normal_x)               #normals
 plt.plot(grid_x,grid_y, 'ko', markersize=1)                             #grid dots
 ax.quiver(grid_x,grid_y, velocity_x,velocity_y)          #velocity
 plt.title('plot')
